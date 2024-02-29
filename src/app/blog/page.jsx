@@ -1,21 +1,24 @@
 import PostCard from '@/components/postCard/postCard';
 import styles from './blog.module.css';
+import { getPosts } from '@/lib/data';
 
-const getData = async () => {
-    try {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts', { next: { revalidate: 5000 } });
-        if (!res.ok) {
-            throw new Error("Something went wrong")
-        }
-        return res.json();
-    } catch (error) {
-        throw new Error(error.message)
-    }
-}
+// FETCH DATA WITH AN API
+// const getData = async () => {
+//     try {
+//         const res = await fetch('https://jsonplaceholder.typicode.com/posts', { next: { revalidate: 5000 } });
+//         if (!res.ok) {
+//             throw new Error("Something went wrong")
+//         }
+//         return res.json();
+//     } catch (error) {
+//         throw new Error(error.message)
+//     }
+// }
 
 export default async function BlogsPage() {
     // fetch all posts
-    const posts = await getData();
+    const posts = await getPosts();
+    // console.log(posts)
 
     return (
         <div className={styles.container}>
