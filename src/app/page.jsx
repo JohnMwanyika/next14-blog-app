@@ -1,8 +1,18 @@
+"use client"
 import Image from 'next/image';
 import styles from './home.module.css';
+import { useRouter } from 'next/navigation';
 
 
 const Home = () => {
+
+  const router = useRouter();
+
+  const handleRedirect = (path) => {
+    console.log('Redirecting...')
+    router.push(path);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.textContainer}>
@@ -13,8 +23,8 @@ const Home = () => {
           cupiditate est laboriosam illum neque id, dolorem atque tempore quos dolore fugit.
         </p>
         <div className={styles.buttons}>
-          <button className={styles.button}>Learn More</button>
-          <button className={styles.button} >Contact</button>
+          <button onClick={() => handleRedirect('/about')} className={styles.button}>Learn More</button>
+          <button onClick={() => handleRedirect('/contact')} className={styles.button} >Contact</button>
         </div>
         <div className={styles.brands}>
           <Image src="/brands.png" alt="" fill className={styles.brandImg} />
