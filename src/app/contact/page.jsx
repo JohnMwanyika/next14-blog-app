@@ -1,6 +1,12 @@
 import Image from "next/image"
 import styles from "./contact.module.css"
 
+// meta data
+export const metadata = {
+    title: 'Contact us',
+    description: 'Fill the contact form bellow to submit your requests and feeback.',
+}
+
 export default function ContactPage() {
     return (
         <div className={styles.container}>

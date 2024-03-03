@@ -15,6 +15,7 @@ import { getPosts } from '@/lib/data';
 //     }
 // }
 
+
 export default async function BlogsPage() {
     // fetch all posts
     const posts = await getPosts();
