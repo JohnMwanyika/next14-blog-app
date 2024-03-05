@@ -11,7 +11,7 @@ export default function Links({ session }) {
 
     const links = [
         {
-            title: "Home page",
+            title: "Home",
             path: "/",
             icon: ""
         },
@@ -54,7 +54,10 @@ export default function Links({ session }) {
                             </form>
                         </>
                         :
-                        <NavLink item={{ title: "Login", path: "/login" }} />
+                        <>
+                            <NavLink item={{ title: "Login", path: "/login" }} />
+                            <NavLink item={{ title: "Register", path: "/register" }} />
+                        </>
                 }
             </div>
             {/* <button className={styles.menuButton} >Menu</button> */}
