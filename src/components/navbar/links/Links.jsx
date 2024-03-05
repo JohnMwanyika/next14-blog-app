@@ -30,6 +30,11 @@ export default function Links({ session }) {
             path: "/blog",
             icon: ""
         },
+        {
+            title: "Gallery",
+            path: "/blog",
+            icon: ""
+        },
     ];
 
     const isAdmin = true;

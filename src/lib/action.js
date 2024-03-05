@@ -36,10 +36,9 @@ export const deletePost = async (formData) => {
 }
 
 export const handleGithubLogin = async () => {
-    const session = auth();
-    console.log(session);
     await signIn("github");
 }
 export const handleLogout = async () => {
+    console.log("User session is destroyed")
     await signOut();
 }
