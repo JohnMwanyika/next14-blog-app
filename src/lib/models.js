@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { connectToDb } from "./utils";
 const { Schema, model, Types, models } = mongoose;
 
 const userSchema = Schema({
@@ -16,9 +17,7 @@ const userSchema = Schema({
         max: 50
     },
     password: {
-        type: String,
-        required: true,
-        min: 6
+        type: String
     },
     img: {
         type: String
