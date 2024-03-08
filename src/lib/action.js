@@ -44,43 +44,44 @@ export const handleLogout = async () => {
     await signOut();
 }
 
-export const register = async (formData) => {
-    // const { username, email, password, img, passwordRepeat } = Object.fromEntries(formData);
+export const register = async (previousState, formData) => {
+    const { username, email, password, img, passwordRepeat } = Object.fromEntries(formData);
+    // check if passwords are equal
+    if (password !== passwordRepeat) return { error: "Passwords do not match!" }
     try {
-        const data = Object.fromEntries(formData)
-        console.log(data);
 
-        if (data.password !== data.passwordRepeat) { return "Passwords do not match!" }
-
-        const user = await User.findOne({ email: data.email });
+        const user = await User.findOne({ email });
         if (user) {
             return { error: "A user with similar credentials is found!" }
         }
         // create user
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(data.password, salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = await User.create({
-            username: data.username,
-            email: data.email,
+            username,
+            email,
             password: hashedPassword,
-            img: data?.img
+            img
         })
-        console.log("User saved to db")
+        return { success: "User registered succesfully redirecting..." }
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong" }
     }
 }
 
-export const login = async (formData) => {
+export const login = async (previousState, formData) => {
     try {
-        console.log(Object.fromEntries(formData))
         const { email, password } = Object.fromEntries(formData);
         await signIn("credentials", { email, password });
 
     } catch (error) {
         console.log(error);
-        return { error: "Something went wrong" }
+        if (error.message.includes("CredentialsSignin")) {
+            return { error: "Invalid username or password" }
+        }
+        // return { error: "Something went wrong" }
+        throw error;
     }
 }

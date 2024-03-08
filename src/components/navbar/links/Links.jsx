@@ -32,7 +32,7 @@ export default function Links({ session }) {
         },
         {
             title: "Gallery",
-            path: "/blog",
+            path: "/gallery",
             icon: ""
         },
     ];

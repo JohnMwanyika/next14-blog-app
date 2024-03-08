@@ -4,10 +4,7 @@ import styles from './navbar.module.css'
 import { auth } from "@/lib/auth";
 
 export default async function Navbar() {
-
     const session = await auth();
-    console.log("Current session", session);
-
     return (
         <div className={styles.container}>
             <Link href="/" className={styles.logo}>Rentisha</Link>
