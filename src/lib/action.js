@@ -5,8 +5,8 @@ import { connectToDb } from "./utils";
 import { auth, signIn, signOut } from "./auth";
 import bcrypt from "bcrypt";
 
-export const addPost = async (formData) => {
-    const { title, desc, slug, userId } = Object.fromEntries(formData);
+export const addPost = async (previousState, formData) => {
+    const { title, desc, slug, userId, img } = Object.fromEntries(formData);
 
     try {
         connectToDb();
@@ -15,10 +15,12 @@ export const addPost = async (formData) => {
         });
         console.log("Saved to Db")
         // display fresh data when new post is added
+        revalidatePath("/admin");
         revalidatePath("/blog");
     } catch (error) {
         console.log(error);
-        throw new Error("Something went wrong")
+        return { error: "Something went wrong!" }
+        // throw new Error("Something went wrong");
     }
 }
 
@@ -30,6 +32,45 @@ export const deletePost = async (formData) => {
         await Post.findByIdAndDelete(id);
         console.log("Post deleted");
         revalidatePath("/blog");
+        revalidatePath("/admin");
+
+    } catch (error) {
+        console.log(error);
+        throw new Error("Something went wrong")
+    }
+}
+
+export const addUser = async (previousState, formData) => {
+    const { username, email, password, passwordRepeat, img, isAdmin } = Object.fromEntries(formData);
+
+    try {
+        const user = await User.findOne({ email });
+        if (user) {
+            return { error: "User with provided email already exist!" }
+        }
+        const newUser = await User.create({
+            username,
+            email,
+            password,
+            img
+        });
+        console.log("User created successfully");
+        revalidatePath("/admin");
+    } catch (error) {
+        console.log(error);
+        throw new Error("Something went wrong!")
+    }
+}
+
+export const deleteUser = async (formData) => {
+    const { id } = Object.fromEntries(formData);
+
+    try {
+        connectToDb();
+        await Post.deleteMany({ userId: id });
+        await User.findByIdAndDelete(id);
+        console.log("User deleted");
+        revalidatePath("/admin");
     } catch (error) {
         console.log(error);
         throw new Error("Something went wrong")
