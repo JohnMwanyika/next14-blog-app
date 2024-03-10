@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { Post, User } from "./models";
 import { connectToDb } from "./utils";
-import { auth, signIn, signOut } from "./auth";
+import { signIn, signOut } from "./auth";
 import bcrypt from "bcrypt";
 
 export const addPost = async (previousState, formData) => {
@@ -11,9 +11,9 @@ export const addPost = async (previousState, formData) => {
     try {
         connectToDb();
         const newPost = await Post.create({
-            title, desc, slug, userId
+            title, desc, slug, userId, img
         });
-        console.log("Saved to Db")
+        console.log(newPost.title, "Saved to Db")
         // display fresh data when new post is added
         revalidatePath("/admin");
         revalidatePath("/blog");
@@ -42,7 +42,9 @@ export const deletePost = async (formData) => {
 
 export const addUser = async (previousState, formData) => {
     const { username, email, password, passwordRepeat, img, isAdmin } = Object.fromEntries(formData);
-
+    if (password !== passwordRepeat) {
+        return { error: "Passwords do not match!" }
+    }
     try {
         const user = await User.findOne({ email });
         if (user) {
@@ -52,9 +54,10 @@ export const addUser = async (previousState, formData) => {
             username,
             email,
             password,
-            img
+            img,
+            isAdmin
         });
-        console.log("User created successfully");
+        console.log(newUser.username, "created successfully");
         revalidatePath("/admin");
     } catch (error) {
         console.log(error);
@@ -105,7 +108,7 @@ export const register = async (previousState, formData) => {
             password: hashedPassword,
             img
         })
-        return { success: "User registered succesfully redirecting..." }
+        return { success: `${newUser.username} registered succesfully redirecting...` };
     } catch (error) {
         console.log(error);
         return { error: "Something went wrong" }

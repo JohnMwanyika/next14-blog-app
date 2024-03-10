@@ -3,7 +3,7 @@ import { addPost } from "@/lib/action"
 import styles from "./adminPostForm.module.css"
 import { useFormState } from "react-dom";
 
-export default async function AdminPostForm({ userId }) {
+export default function AdminPostForm({ userId }) {
 
     const [state, dispatch] = useFormState(addPost, undefined);
 

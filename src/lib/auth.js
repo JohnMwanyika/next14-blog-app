@@ -42,7 +42,7 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
     callbacks: { // The authenticated user can now be accessible at this point
         // this function controlls wheather the user should be allowed to signin or not
         // returns true to allow ore false to redirect user to error pages
-        async signIn({ user, account, profile }) {
+        async signIn({ account, profile }) {
             // user:- contains the user obtained from the authentication above
             // account:- contains provider information e.g type:credentials/github , provider and providerAccountId which is same as userId
             // profile :- in the case of social accounts, this will contain user information
@@ -62,7 +62,7 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
                             email: profile.email,
                             img: profile.avatar_url
                         });
-                        console.log("User created")
+                        console.log(newUser.username, " created")
                     }
                 } catch (error) {
                     console.log(error);

@@ -14,7 +14,7 @@ export default function LoginPage() {
                     <button className={styles.github} type="submit">Login with Github</button>
                 </form>
                 <LoginForm />
-                <Link href={"/register"}>Don't have an account? <b>Register</b></Link>
+                <Link href={"/register"}>{"Don't have an account?"} <b>Register</b></Link>
             </div>
         </div>
     )

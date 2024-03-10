@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import { connectToDb } from "./utils";
-const { Schema, model, Types, models } = mongoose;
+const { Schema, model, models } = mongoose;
 
 const userSchema = Schema({
     username: {

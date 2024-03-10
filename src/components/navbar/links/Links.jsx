@@ -37,7 +37,7 @@ export default function Links({ session }) {
         },
     ];
 
-    const isAdmin = true;
+
     return (
         <div className={styles.container}>
             <div className={styles.links}>
