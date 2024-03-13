@@ -31,7 +31,7 @@ export const authConfig = {
             const isOnLoginPage = request.nextUrl?.pathname.startsWith("/login");
 
             // ONLY ADMIN CAN REACH THE ADMIN DASHBOARD
-            if (isOnAdminPanel && !user.isAdmin) {
+            if (isOnAdminPanel && !user?.isAdmin) {
                 return false;
             }
             // ONLY AUTHENTICATED USERS CAN REACH THE BLOG PAGE

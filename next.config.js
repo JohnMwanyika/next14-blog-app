@@ -16,6 +16,12 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: "z-p3-scontent.fmba2-1.fna.fbcdn.net",
+                port: '',
+                pathname: '/v/**'
+            },
+            {
+                protocol: 'https',
                 hostname: "www.unsplash.com"
             },
         ]

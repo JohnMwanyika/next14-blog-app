@@ -42,9 +42,12 @@ export const deletePost = async (formData) => {
 
 export const addUser = async (previousState, formData) => {
     const { username, email, password, passwordRepeat, img, isAdmin } = Object.fromEntries(formData);
-    if (password !== passwordRepeat) {
-        return { error: "Passwords do not match!" }
-    }
+    // if (password !== passwordRepeat) {
+    //     return { error: "Passwords do not match!" }
+    // }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     try {
         const user = await User.findOne({ email });
         if (user) {
@@ -53,11 +56,11 @@ export const addUser = async (previousState, formData) => {
         const newUser = await User.create({
             username,
             email,
-            password,
+            password: hashedPassword,
             img,
             isAdmin
         });
-        console.log(newUser.username, "created successfully");
+        console.log(newUser.username, `created successfully default password is ${password}`);
         revalidatePath("/admin");
     } catch (error) {
         console.log(error);
@@ -98,10 +101,10 @@ export const register = async (previousState, formData) => {
         if (user) {
             return { error: "A user with similar credentials is found!" }
         }
-        // create user
+        // hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
+        // create user
         const newUser = await User.create({
             username,
             email,

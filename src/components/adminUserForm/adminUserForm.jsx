@@ -15,7 +15,7 @@ export default function AdminUserForm() {
             <input type="password" name="password" placeholder="Password" />
             <input type="text" name="img" placeholder="Avatat Link" />
             <select name="isAdmin" id="">
-                <option selected value="false">Is Admin</option>
+                <option value="false">Is Admin</option>
                 <option value="false">User</option>
                 <option value="true">Admin</option>
             </select>
